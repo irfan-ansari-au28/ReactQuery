@@ -6,10 +6,12 @@ const SuperHeroesPage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/superheroes").then((res) => {
-      setData(res.data);
-      setIsLoading(false);
-    });
+    setTimeout(() => {
+      axios.get("http://localhost:4000/superheroes").then((res) => {
+        setData(res.data);
+        setIsLoading(false);
+      });
+    },0);
   }, []);
 
   if (isLoading) {
