@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { isError } from "react-query";
 
 const SuperHeroesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setTimeout(() => {
-      axios.get("http://localhost:4000/superheroes").then((res) => {
+    axios
+      .get("http://localhost:4000/superheroes")
+      .then((res) => {
         setData(res.data);
         setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
       });
-    },0);
   }, []);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
   }
 
   return (
